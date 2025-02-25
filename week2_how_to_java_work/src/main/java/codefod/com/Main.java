@@ -6,6 +6,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+
         getNumWords("Vo quang minh");
     }
 
@@ -17,5 +18,10 @@ public class Main {
         for (String s : result) {
             System.out.println(s);
         }
+
+        // TODO: Viết một chương trình Java cơ bản và thực chạy compile file chương trình ra bytecode
+        // TODO: Thực chạy file bytecode bằng lệnh java
+        // TODO: Thực hiện chạy file bytecode với cấu hình heap size, gc, ...
+
     }
 }
