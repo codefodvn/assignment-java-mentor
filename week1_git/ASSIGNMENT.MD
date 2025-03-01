@@ -1,5 +1,5 @@
 
-# Week 1: Git
+# Week 1: Gittt
 
 1. Git thực sự lưu trữ dữ liệu như thế nào? Các đối tượng (objects) như blob, tree, commit, và tag có quan hệ gì với nhau trong hệ thống lưu trữ phân tán của Git?
 
