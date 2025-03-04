@@ -16,8 +16,8 @@ public class BankTransfer extends PaymentMethod{
     private static final double FEE_THRESHOLD = 2000;
     private static final double FEE_PERCENTAGE = 0.01;
 
-    public BankTransfer(String id, double balance, User user) {
-        super(id, balance, user);
+    public BankTransfer(int id, double balance ) {
+        super(id, balance);
     }
 
     @Override

@@ -6,6 +6,8 @@ import src.model.User;
 import java.util.List;
 
 public interface UserService {
-    void login(String username, String password);
+    User login();
     List<Transaction> getTransactions(User user);
+    boolean checkTransactionInMinute(List<Transaction> transactions);
+    void resetPassword(User user);
 }

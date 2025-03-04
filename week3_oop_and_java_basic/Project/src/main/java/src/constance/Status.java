@@ -1,17 +1,17 @@
-package src.model;
+package src.constance;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
+
 @Getter
 @AllArgsConstructor
-public enum TransactionStatus {
-    PENDING(0,"Đang xử lí"),
-    SUCCESS(1,"Thành công"),
-    FAILED(2, "Thất bại"),
-    REFUNDED(3,"Hoàn trả");
+public enum Status {
+    ACTIVE(0,"Đang hoạt động"),
+    SUSPENDED(1, "Bị khóa tạm thời do giao dịch đáng ngờ"),
+    BANNED(2, "Bị cấm vĩnh viễn do vi phạm chính sách.");
 
     private final Integer value;
     private final String description;

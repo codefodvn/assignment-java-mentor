@@ -1,16 +1,17 @@
-package src.model;
+package src.constance;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
-
 @Getter
 @AllArgsConstructor
-public enum Currency {
-    VND(0,"Việt Nam đồng"),
-    USD(1, "Đô la Mỹ");
+public enum TransactionStatus {
+    PENDING(0,"Đang xử lí"),
+    SUCCESS(1,"Thành công"),
+    FAILED(2, "Thất bại"),
+    REFUNDED(3,"Hoàn trả");
 
     private final Integer value;
     private final String description;

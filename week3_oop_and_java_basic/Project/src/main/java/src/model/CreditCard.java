@@ -15,8 +15,8 @@ import java.util.Date;
 public class CreditCard extends PaymentMethod{
     private double creditLimit;
 
-    public CreditCard(String id, double balance, User user) {
-        super(id, balance, user);
+    public CreditCard(int id, double balance) {
+        super(id, balance);
     }
 
     @Override

@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class PaymentMethod {
-    String id;
+    int id;
     double balance;
-    User user;
     public abstract boolean processPaymentMethod(double amount);
 }

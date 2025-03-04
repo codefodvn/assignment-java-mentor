@@ -1,26 +1,22 @@
 package src.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.PackagePrivate;
+import src.constance.Status;
 
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class User {
+    int id;
     String username;
     String password;
     String name;
-    String email;
-    int age;
     Status status;
-    Set<EWallet> eWallets;
-    Set<BankTransfer> bankTransfers;
-    Set<CreditCard> creditCards;
+    List<PaymentMethod> paymentMethods;
 }
