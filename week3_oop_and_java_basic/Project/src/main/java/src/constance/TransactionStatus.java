@@ -11,7 +11,8 @@ public enum TransactionStatus {
     PENDING(0,"Đang xử lí"),
     SUCCESS(1,"Thành công"),
     FAILED(2, "Thất bại"),
-    REFUNDED(3,"Hoàn trả");
+    REFUNDED(3,"Hoàn trả"),
+    SUSPECT(4,"Nghi ngờ");
 
     private final Integer value;
     private final String description;

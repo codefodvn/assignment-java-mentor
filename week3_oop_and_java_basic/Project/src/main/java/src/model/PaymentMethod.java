@@ -15,4 +15,12 @@ public abstract class PaymentMethod {
     int id;
     double balance;
     public abstract boolean processPaymentMethod(double amount);
+
+    @Override
+    public String toString() {
+        return "PaymentMethod{" +
+                "id=" + id +
+                ", balance=" + balance +
+                '}';
+    }
 }

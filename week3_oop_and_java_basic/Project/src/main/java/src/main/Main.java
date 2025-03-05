@@ -51,23 +51,83 @@ public class Main {
                              choice2 = menu1.getUserChoice(5);
                              switch(choice2){
                                  case 1:
-
                                      PaymentMethod paymentMethod = paymentService.choosePaymentMethod(userlogin);
                                      transactionService.addTransaction(userlogin,paymentMethod);
+                                 break;
+                                 case 2:
+                                     transactionService.showTransactionIn7Days(userlogin);
+                                     refundService.refund();
+                                 break;
+                                 case 3:
+                                     Menu menu3 = new Menu();
+                                     menu3.add("Hiển thị tổng số tiền đã thanh toán theo từng phương thức");
+                                     menu3.add("Hiển thị số lần thanh toán thành công/thất bại");
+                                     menu3.add("Hiển thị danh sách giao dịch nghi ngờ gian lận");
+                                     menu3.add("Nếu là tài khoản doanh nghiệp → Xuất báo cáo theo tháng");
+                                     menu3.add("Quay lại menu chính");
+                                     int choice3;
+                                     do {
+                                         choice3 = menu3.getUserChoice(5);
+                                         switch(choice3){
+                                             case 1:
+                                                 transactionService.showPaymentMethod(userlogin);
+                                                 break;
+                                             case 2:
+                                                 transactionService.showTransactionSuccessAndFailed(userlogin);
+                                                 break;
+                                             case 3:
+                                                 if(fraudDetectionService.checkUser(userlogin)){
+                                                     System.out.println("Tài khoản đang bị nghi ngờ!");
+                                                     transactionService.showSuspendTransaction(userlogin);
+                                                 }
+                                                 else{
+                                                     System.out.println("Hôm nay không thấy giao dịch bất thường");
+                                                 }
 
+                                                 break;
+                                             case 4:
+                                                 transactionService.showTransactionMonthly(userlogin);
+
+                                                 break;
+                                             default:
+                                                 break;
+                                         }}
+                                     while(choice3 >0 && choice3 <5);
                                  break;
-                                 case 2:userlogin=userService.login();
+                                 case 4:
+                                    Menu menu4 = new Menu();
+                                    menu4.add("Thay đổi mật khẩu");
+                                    menu4.add("Thêm phương thức thanh toán mới");
+                                    menu4.add("Xóa phương thức thanh toán cũ");
+                                    menu4.add("Xem thông tin bảo mật tài khoản");
+                                    menu4.add("Quay lại menu chính");
+                                    int choice4;
+                                    do {
+                                        choice4 = menu4.getUserChoice(5);
+                                        switch(choice4){
+                                            case 1:
+                                                userService.resetPassword(userlogin);
+                                                break;
+                                                case 2:
+                                                    paymentService.addPayment(userlogin);
+                                                    break;
+                                                    case 3:
+                                                        paymentService.removePayment(userlogin);
+                                                        break;
+                                                        case 4:
+                                                            System.out.println(userlogin);
+                                                            break;
+                                            default:
+                                                                break;
+                                        }}
+                                        while(choice4 >0 && choice4 <5);
                                  break;
-                                 case 3:userlogin=userService.login();
-                                 break;
-                                 case 4:userlogin=userService.login();
-                                 break;
-                                 case 5:userlogin=userService.login();
+                                 case 5:
                                  break;
                                  default:
                                      break;
                              }
-                        } while(choice2 > 0 && choice2 <6);
+                        } while(choice2 > 0 && choice2 <5);
 
 
                     } else System.out.println("Bye bye");

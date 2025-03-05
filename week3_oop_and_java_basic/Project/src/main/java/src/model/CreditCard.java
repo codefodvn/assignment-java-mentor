@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreditCard extends PaymentMethod{
-    private double creditLimit;
+    private double creditLimit=2000;
 
     public CreditCard(int id, double balance) {
         super(id, balance);
@@ -26,5 +26,14 @@ public class CreditCard extends PaymentMethod{
         };
         setBalance(getBalance()-amount);
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "CreditCard{" +
+                "creditLimit=" + creditLimit +
+                ", id=" + super.getId() +
+                ", balance=" + super.getBalance() +
+                '}';
     }
 }

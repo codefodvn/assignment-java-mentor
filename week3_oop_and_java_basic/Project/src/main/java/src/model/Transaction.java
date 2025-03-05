@@ -22,4 +22,16 @@ public class Transaction {
     LocalDateTime transactionDateTime;
     Currency currency;
     TransactionStatus transactionStatus;
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", paymentMethod=" + paymentMethod.toString() +
+                ", amount=" + amount +
+                ", transactionDateTime=" + transactionDateTime +
+                ", currency=" + currency +
+                ", transactionStatus=" + transactionStatus +
+                '}';
+    }
 }

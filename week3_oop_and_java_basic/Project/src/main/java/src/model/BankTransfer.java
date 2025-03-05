@@ -27,4 +27,13 @@ public class BankTransfer extends PaymentMethod{
         setBalance(getBalance() - finalAmount);
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "BankTransfer{"+
+                "id=" + super.getId() +
+                ", balance=" + super.getBalance() +
+                '}'
+                ;
+    }
 }

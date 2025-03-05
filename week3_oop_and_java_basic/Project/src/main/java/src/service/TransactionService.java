@@ -10,4 +10,5 @@ public interface TransactionService {
     void showPaymentMethod(User user);
     void showTransactionSuccessAndFailed(User user);
     void showTransactionMonthly(User user);
+    void showSuspendTransaction(User user);
 }

@@ -1,6 +1,9 @@
 package src.service.impl;
 
+import lombok.Getter;
+import lombok.Setter;
 import src.constance.Currency;
+import src.constance.Status;
 import src.constance.TransactionStatus;
 import src.model.InputUtils;
 import src.model.PaymentMethod;
@@ -11,26 +14,36 @@ import src.service.TransactionService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
+@Setter
 public class TransactionServiceImpl implements TransactionService {
     private OPTServiceImpl opt;
+    @Getter
     public static List<Transaction> transactions = new ArrayList<>();
     public TransactionServiceImpl(OPTServiceImpl optService){
         opt = optService;
     }
+
     @Override
     public void addTransaction(User user,PaymentMethod paymentMethod) {
+
         if(paymentMethod == null){
             System.out.println("Không có phương thức giao dịch");
             return;
         }
         int id = InputUtils.inputInt("Nhập id mã giao dịch: ");
+        for(Transaction transaction : transactions){
+            if(transaction.getId() == id){
+                System.out.println("id đã tồn tại, tạo giao dịch thất bại!");
+                return;
+            }
+        }
         double amount = InputUtils.inputDouble("Nhập số tiền cần thanh toán: ");
         Transaction transaction = new Transaction(id,user,paymentMethod,amount, LocalDateTime.now(), Currency.USD, TransactionStatus.PENDING);
-        if(amount > 5000 && !opt.checkOTP()){
+        if(amount >= 5000 && !opt.checkOTP()){
             transaction.setTransactionStatus(TransactionStatus.FAILED);
         }
-        if(amount > paymentMethod.getBalance()){
+        if(!paymentMethod.processPaymentMethod(amount)){
             System.out.println("Số dư không đủ bạn hãy chuyển sang phương thức khác hoặc chia nhỏ thanh toán!");
             transaction.setTransactionStatus(TransactionStatus.FAILED);
         } else{
@@ -47,16 +60,17 @@ public class TransactionServiceImpl implements TransactionService {
         } else {
             List<Transaction> transaction7days = new ArrayList<>();
             for (Transaction t : transactions) {
-                if(t.getTransactionDateTime().isAfter(LocalDateTime.now().minusDays(7))){
+                if(t.getTransactionDateTime().isAfter(LocalDateTime.now().minusDays(7)) && t.getUser().equals(user)){
                     transaction7days.add(t);
                 }
             }
-            System.out.println("Danh sách giao dịch:");
+            System.out.println("Danh sách giao dịch trong 7 ngày gần nhất:");
             for(Transaction t : transaction7days){
                 System.out.println(t);
             }
         }
     }
+
 
     @Override
     public void showPaymentMethod(User user) {
@@ -91,9 +105,21 @@ public class TransactionServiceImpl implements TransactionService {
     public void showTransactionMonthly(User user) {
         System.out.println("Giao dịch trong tháng qua: ");
         for(Transaction t : transactions){
-            if(t.getTransactionDateTime().isAfter(LocalDateTime.now().minusMonths(1))){
+            if(t.getTransactionDateTime().isAfter(LocalDateTime.now().minusMonths(1)) && t.getUser().equals(user)){
                 System.out.println(t);
             }
         }
     }
+
+    @Override
+    public void showSuspendTransaction(User user) {
+        System.out.println("Giao dịch nghi gian lận: ");
+        for(Transaction t : transactions){
+            if(t.getTransactionDateTime().isAfter(LocalDateTime.now().minusDays(1)) && t.getUser().equals(user)){
+                System.out.println(t);
+            }
+        }
+    }
+
+
 }

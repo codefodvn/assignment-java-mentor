@@ -13,7 +13,7 @@ public class PaymentServiceImpl implements PaymentService {
         System.out.println("1. Ví điện tử");
         System.out.println("2. Ngân hàng");
         System.out.println("3. Thẻ tín dụng");
-        double balance = 5000;
+        double balance = 50000;
         int choice;
         while (true) {
 
@@ -31,6 +31,7 @@ public class PaymentServiceImpl implements PaymentService {
 
                     EWallet eWallet = new EWallet(stk,balance);
                     user.getPaymentMethods().add(eWallet);
+                    System.out.println("Thêm phương thức thành công");
                     break;
                 case 2:
                     int stkBank =  InputUtils.inputId("Nhập id phương thức thanh toán: ");
@@ -42,6 +43,7 @@ public class PaymentServiceImpl implements PaymentService {
                     }
                     BankTransfer bank = new BankTransfer(stkBank,balance);
                     user.getPaymentMethods().add(bank);
+                    System.out.println("Thêm phương thức thành công");
                     break;
 
                 case 3:
@@ -54,6 +56,7 @@ public class PaymentServiceImpl implements PaymentService {
                     }
                     CreditCard card = new CreditCard(stkCard,balance);
                     user.getPaymentMethods().add(card);
+                    System.out.println("Thêm phương thức thành công");
                     break;
                 default:
                     System.out.println("Lựa chọn không hợp lệ! Vui lòng chọn lại.");
@@ -68,6 +71,7 @@ public class PaymentServiceImpl implements PaymentService {
         int stk =  InputUtils.inputId("Nhập id phương thức muốn xóa: ");
         for(PaymentMethod pay : user.getPaymentMethods()) {
             if(pay.getId()==stk) {
+
                 user.getPaymentMethods().remove(pay);
                 System.out.println("Xóa phương thức thành công");
                 return;
@@ -88,7 +92,7 @@ public class PaymentServiceImpl implements PaymentService {
             menu.add(pay.toString());
         }
         int k = menu.getUserChoice(user.getPaymentMethods().size());
-        return  user.getPaymentMethods().get(k);
+        return  user.getPaymentMethods().get(k-1);
     }
 
 }

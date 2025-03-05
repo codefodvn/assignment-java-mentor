@@ -15,7 +15,7 @@ public class RefundServiceImpl implements RefundService {
         int id = InputUtils.inputInt("Nhập id của giao dịch cần hoàn tiền: ");
         for (Transaction trans: TransactionServiceImpl.transactions){
             if(trans.getId() == id){
-                if(trans.getTransactionDateTime().isAfter(LocalDateTime.now().minusDays(7))){
+                if(trans.getTransactionDateTime().isAfter(LocalDateTime.now().minusDays(7)) && trans.getTransactionStatus()==TransactionStatus.SUCCESS){
                     Transaction transaction = new Transaction(trans.getId()+999,trans.getUser(),trans.getPaymentMethod(),trans.getAmount(),
                             LocalDateTime.now(), Currency.USD,TransactionStatus.REFUNDED);
                     trans.getPaymentMethod().setBalance(trans.getPaymentMethod().getBalance()+trans.getAmount());
