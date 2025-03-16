@@ -10,4 +10,5 @@ public interface UserService {
     List<Transaction> getTransactions(User user);
     boolean checkTransactionInMinute(List<Transaction> transactions);
     void resetPassword(User user);
+    void ListLockUser();
 }

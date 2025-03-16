@@ -5,10 +5,11 @@ import lombok.Setter;
 import src.constance.Currency;
 import src.constance.Status;
 import src.constance.TransactionStatus;
-import src.model.InputUtils;
+import src.input.InputUtils;
 import src.model.PaymentMethod;
 import src.model.Transaction;
 import src.model.User;
+import src.service.OPTService;
 import src.service.TransactionService;
 
 import java.time.LocalDateTime;
@@ -17,16 +18,22 @@ import java.util.List;
 @Getter
 @Setter
 public class TransactionServiceImpl implements TransactionService {
-    private OPTServiceImpl opt;
+    private OPTService opt;
     @Getter
-    public static List<Transaction> transactions = new ArrayList<>();
-    public TransactionServiceImpl(OPTServiceImpl optService){
+    private List<Transaction> transactions;
+    private TransactionServiceImpl(OPTService optService,List<Transaction> transactions) {
         opt = optService;
+        this.transactions = transactions;
     }
-
+    public static TransactionService getInstance(OPTService optService, List<Transaction> transactions) {
+        return new TransactionServiceImpl(optService,transactions);
+    }
     @Override
     public void addTransaction(User user,PaymentMethod paymentMethod) {
-
+        if(user.getStatus()== Status.SUSPENDED){
+            System.out.println("Tài khoản bị khóa giao dịch!");
+            return;
+        }
         if(paymentMethod == null){
             System.out.println("Không có phương thức giao dịch");
             return;
@@ -74,7 +81,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void showPaymentMethod(User user) {
-         for(PaymentMethod pm : user.getPaymentMethods()){
+         for(PaymentMethod pm : user.getPaymentMethods().values()){
              System.out.println(pm);
              int money = 0;
              for(Transaction t : transactions){

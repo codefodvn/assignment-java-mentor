@@ -2,7 +2,7 @@ package src.service.impl;
 
 import lombok.Getter;
 import lombok.Setter;
-import src.model.InputUtils;
+import src.input.InputUtils;
 import src.service.OPTService;
 
 import java.util.Random;
@@ -10,6 +10,14 @@ import java.util.Random;
 @Setter
 public class OPTServiceImpl implements OPTService {
     private int wrongAttempt=0;
+
+    private OPTServiceImpl() {
+
+    }
+    public static OPTService getInstance() {
+        return new OPTServiceImpl();
+    }
+
     @Override
     public boolean checkOTP() {
         int otp = new Random().nextInt(10000);

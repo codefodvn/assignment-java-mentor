@@ -1,4 +1,4 @@
-package src.model;
+package src.input;
 
 import java.util.Scanner;
 

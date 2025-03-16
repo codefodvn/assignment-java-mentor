@@ -1,52 +1,62 @@
 package src.service.impl;
 
 import src.constance.Status;
+import src.input.InputUtils;
 import src.model.*;
 import src.service.UserService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
 public class UserServiceImpl implements UserService {
-    private int attemptLogin = 0;
+    Map<String,Integer> login = new HashMap<String,Integer>();
     List<User> users;
 
-    public UserServiceImpl(List<User> list) {
-        users = list;
+    private UserServiceImpl() {
+        DataInitializer();
     }
-
+    public static UserService getInstance() {
+        return new UserServiceImpl();
+    }
     @Override
     public User login() {
         String username =null;
         String password = null;
-        while(attemptLogin<3){
+        boolean check=false;
              username = InputUtils.inputString("Tài khoản: ");
              password = InputUtils.inputString("Mật khẩu: ");
             for (User u : users) {
-                if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+                if (u.getUsername().equals(username) ) {
+                    check=true;
                     if(u.getStatus()==Status.BANNED) {
                         System.out.println("Tài khoản bị ban rồi nhé!");
                         return null;
                     }
-                    System.out.println("Login thành công");
-                    attemptLogin = 0;
-                    return u;
+                    else if(u.getPassword().equals(password)) {
+                        System.out.println("Login thành công");
+                        login.replace(u.getUsername(),0);
+                        return u;
+                    }
+                    else {
+                        login.replace(u.getUsername(),login.get(u.getUsername())+1);
+                        System.out.println("Login không thành công!");
+                        System.out.println("Bạn còn "+(3-login.get(username))+" lần thử lại!" );
+                        if(login.get(username)==3) {
+                            u.setStatus(Status.BANNED);
+                            System.out.println("Tài khoản bạn đã nhập quá số lần quy định, bị ban rồi nhé m!");
+                        }
+                    }
                 }
+
+            }
+            if(!check) {
+                System.out.println("Không tìm thấy username trong hệ thống!");
             }
 
-            attemptLogin++;
-            System.out.printf("Login thất bại, bạn còn %d lần nữa. \n" ,3- attemptLogin);
-        }
-        User user = null;
-        for (User u : users) {
-            if (u.getUsername().equals(username) ) {
-                user = u;
-            }
-        }
-        System.out.println("Tài khoản bị khóa do đăng nhập sai quá 3 lần!");
-        attemptLogin=0;
-        if(user!=null)user.setStatus(Status.BANNED);
         return null;
+
     }
 
     @Override
@@ -65,6 +75,28 @@ public class UserServiceImpl implements UserService {
         user.setPassword(newPass);
     }
 
+    @Override
+    public void ListLockUser() {
+        System.out.println("Danh sách tài khoản bị khóa: ");
+        for (User u : users) {
+            if(u.getStatus()==Status.SUSPENDED) {
+                System.out.println(u);
+            }
+        }
+    }
+
+    private void DataInitializer(){
+        User u1 = new User(1,"minh1","123","Minh", Status.ACTIVE,new HashMap<>());
+        User u2 = new User(2,"minh2","123","Minh", Status.ACTIVE,new HashMap<>());
+        User u3 = new User(3,"minh3","123","Minh", Status.ACTIVE,new HashMap<>());
+        users = new ArrayList<>();
+        users.add(u1);
+        users.add(u2);
+        users.add(u3);
+        login.put(u1.getUsername(),0);
+        login.put(u2.getUsername(),0);
+        login.put(u3.getUsername(),0);
+    }
 
 
 

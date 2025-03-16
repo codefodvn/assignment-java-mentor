@@ -10,7 +10,7 @@ import java.util.Map;
 @AllArgsConstructor
 public enum Status {
     ACTIVE(0,"Đang hoạt động"),
-    SUSPENDED(1, "Có giao dịch đáng ngờ"),
+    SUSPENDED(1, "Có giao dịch đáng ngờ, khóa tạm thời."),
     BANNED(2, "Bị cấm vĩnh viễn do vi phạm chính sách.");
 
     private final Integer value;
