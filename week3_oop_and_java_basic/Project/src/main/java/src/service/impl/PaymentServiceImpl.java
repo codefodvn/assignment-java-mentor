@@ -96,10 +96,10 @@ public class PaymentServiceImpl implements PaymentService {
             return null;
         }
         for(PaymentMethod pay : user.getPaymentMethods().values()) {
-            menu.add(pay.toString());
+            System.out.println(pay);
         }
-        int k = menu.getUserChoice(user.getPaymentMethods().size());
-        return  user.getPaymentMethods().get(k-1);
+        int k = InputUtils.inputId("Điền id tài khoản bạn muốn thanh toán: ");
+        return  user.getPaymentMethods().get(k);
     }
 
 }

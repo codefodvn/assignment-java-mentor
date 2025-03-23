@@ -86,9 +86,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private void DataInitializer(){
-        User u1 = new User(1,"minh1","123","Minh", Status.ACTIVE,new HashMap<>());
-        User u2 = new User(2,"minh2","123","Minh", Status.ACTIVE,new HashMap<>());
-        User u3 = new User(3,"minh3","123","Minh", Status.ACTIVE,new HashMap<>());
+        User u1 = new User(1,"minh1","123","Minh", Status.ACTIVE,new HashMap<>(),0);
+        User u2 = new User(2,"minh2","123","Minh", Status.ACTIVE,new HashMap<>(),0);
+        User u3 = new User(3,"minh3","123","Minh", Status.ACTIVE,new HashMap<>(),0);
         users = new ArrayList<>();
         users.add(u1);
         users.add(u2);

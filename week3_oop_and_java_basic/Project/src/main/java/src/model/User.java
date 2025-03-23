@@ -20,6 +20,7 @@ public class User {
     String name;
     Status status;
     Map<Integer,PaymentMethod> paymentMethods;
+    double loan;
 
     @Override
     public String toString() {

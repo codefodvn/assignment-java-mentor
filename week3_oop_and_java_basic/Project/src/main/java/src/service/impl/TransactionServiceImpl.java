@@ -6,9 +6,7 @@ import src.constance.Currency;
 import src.constance.Status;
 import src.constance.TransactionStatus;
 import src.input.InputUtils;
-import src.model.PaymentMethod;
-import src.model.Transaction;
-import src.model.User;
+import src.model.*;
 import src.service.OPTService;
 import src.service.TransactionService;
 
@@ -51,8 +49,24 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setTransactionStatus(TransactionStatus.FAILED);
         }
         if(!paymentMethod.processPaymentMethod(amount)){
-            System.out.println("Số dư không đủ bạn hãy chuyển sang phương thức khác hoặc chia nhỏ thanh toán!");
-            transaction.setTransactionStatus(TransactionStatus.FAILED);
+            System.out.println("Số dư không đủ hệ thống chia nhỏ thanh toán!");
+            amount = paymentMethod.spilitProcess(amount);
+            for(PaymentMethod pay : user.getPaymentMethods().values()){
+                if(pay.getId() != paymentMethod.getId()){
+                    if(!pay.processPaymentMethod(amount)){
+                        amount = pay.spilitProcess(amount);
+                        System.out.println("Số tiền đã đc chuyển nhỏ thanh toán vào phương thức: "+pay.getId());
+                    } else {
+                        System.out.println("Số tiền đã được chuyển qua thanh toán ở phương thức có id: "+pay.getId());
+                        amount = 0;
+                    }
+                }
+            }
+            if(amount>0){
+                System.out.println("Hiện tại không thể thanh toán tiếp số dư này nên sẽ tính vào khoản vay: "+amount);
+                user.setLoan(user.getLoan()+amount);
+            }
+            transaction.setTransactionStatus(TransactionStatus.SUCCESS);
         } else{
             System.out.println("Thanh toán thành công!");
             transaction.setTransactionStatus(TransactionStatus.SUCCESS);

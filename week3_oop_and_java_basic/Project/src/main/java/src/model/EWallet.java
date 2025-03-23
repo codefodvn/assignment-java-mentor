@@ -22,9 +22,26 @@ public class EWallet extends PaymentMethod{
             return false;
         }
         amountOfday += amount;
-        if(amountOfday>amountMaxPerDay) return false;
+        if(amountOfday>amountMaxPerDay) {
+            amountOfday -= amount;
+            return false;
+        }
         else super.setBalance(getBalance()-amountOfday);
         return true;
+    }
+
+    @Override
+    public double spilitProcess(double amount) {
+         double minusAmount ;
+         if(getBalance()>(amountMaxPerDay-amountOfday)){
+             minusAmount = amountMaxPerDay-amountOfday;
+         }
+         else{
+             minusAmount = getBalance();
+         }
+         setBalance(getBalance()-minusAmount);
+          amount-=minusAmount;
+         return amount;
     }
 
     @Override

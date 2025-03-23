@@ -16,6 +16,7 @@ public abstract class PaymentMethod {
     double balance;
     public abstract boolean processPaymentMethod(double amount);
 
+    public abstract double spilitProcess(double amount);
     @Override
     public String toString() {
         return "PaymentMethod{" +

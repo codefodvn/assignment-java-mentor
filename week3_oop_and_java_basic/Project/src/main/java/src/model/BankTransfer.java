@@ -29,6 +29,19 @@ public class BankTransfer extends PaymentMethod{
     }
 
     @Override
+    public double spilitProcess(double amount) {
+        double finalAmount ;
+        if (getBalance()>FEE_THRESHOLD){
+            finalAmount =(amount > FEE_THRESHOLD) ? amount * (1 + FEE_PERCENTAGE) : amount;
+        } else finalAmount = amount;
+        double minusAmount = getBalance();
+        setBalance(0);
+        amount= finalAmount - minusAmount;
+            return amount;
+    }
+
+
+    @Override
     public String toString() {
         return "BankTransfer{"+
                 "id=" + super.getId() +

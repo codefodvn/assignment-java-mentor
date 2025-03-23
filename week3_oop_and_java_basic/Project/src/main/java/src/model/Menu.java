@@ -23,11 +23,11 @@ public class Menu extends ArrayList<String> {
             System.out.printf("Chọn 1..%d: \n",k);
             try {
                 choice = Integer.parseInt(sc.nextLine());
-                if(choice<1 || choice>8) System.out.printf("**Số từ 1 đến %d \n",k);
+                if(choice<1 || choice>this.size()) System.out.printf("**Số từ 1 đến %d \n",k);
             } catch (Exception e) {
                 System.out.println("**Number format");
             }
-        } while (choice < 1 || choice > 9);
+        } while (choice < 1 || choice > this.size());
         return choice;
     }
 

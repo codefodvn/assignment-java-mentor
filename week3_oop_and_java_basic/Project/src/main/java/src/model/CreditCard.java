@@ -29,6 +29,13 @@ public class CreditCard extends PaymentMethod{
     }
 
     @Override
+    public double spilitProcess(double amount) {
+        double minusAmount = getBalance()+creditLimit;
+        setBalance(-creditLimit);
+        return amount-= minusAmount;
+    }
+
+    @Override
     public String toString() {
         return "CreditCard{" +
                 "creditLimit=" + creditLimit +
