@@ -65,8 +65,8 @@ X-Powered-By Present: 45%
    - Mỗi RecursiveTask<HeaderStats> sẽ xử lý 1 phần → tổng hợp kết quả lại.
 
 4. Multi-Process: Nén file đầu ra
-   - Sau khi xử lý từng file → ghi kết quả vào output/processed/file1.stats
-   - Gọi tiến trình khác (dùng ProcessBuilder) để giả lập nén:
+   - Sau khi xử lý từng file → ghi kết quả vào **output/processed/file1.stats
+   - Gọi tiến trình khác (dùng ProcessBuilder) để giả lập nén:**
 
 ### Gợi ý các lớp
 
